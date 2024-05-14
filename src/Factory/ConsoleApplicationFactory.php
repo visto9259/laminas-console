@@ -1,22 +1,20 @@
 <?php
 
-namespace Visto\Console;
+namespace Visto\Console\Factory;
 
-use Psr\Container\ContainerExceptionInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
-use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Component\Console\Application;
+use Visto\Console\ConsoleApplicationConfig;
+use Visto\Console\ContainerCommandLoader;
 
-class ConsoleApplication
+class ConsoleApplicationFactory implements FactoryInterface
 {
+
     /**
-     * Creates a Symfony Console Application
-     * @param ContainerInterface $container
-     * @return Application
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
+     * Create a Symfony Console
      */
-    public static function create(ContainerInterface $container): Application
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null): Application
     {
         $config = $container->get('config');
         $laminasConsoleConfig = new ConsoleApplicationConfig(
